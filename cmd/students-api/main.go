@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github/milankatira/students-api-go/internal/config"
+	"github/milankatira/students-api-go/internal/http/handler/student"
 	"log"
 	"log/slog"
 	"net/http"
@@ -17,13 +18,7 @@ func main() {
 
 	router := http.NewServeMux()
 
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "GET" {
-			w.Write([]byte("welcome to student api"))
-		} else {
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		}
-	})
+	router.HandleFunc("GET /api/students", student.New())
 
 	server := &http.Server{
 		Addr:    cfg.Addr,
